@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block style %}
+.read-article-body{
+    width:100vw;
+    background-color:white;
+    justify-content:center;
+    display:flex;
+}
+.read-article{
+    width:80vw;
+    background-color:white;
+    margin-top:40px;
+    border-left:2px solid black;
+    padding:10px;
+}
+.title{
+    color:black;
+    justify-content:center;
+    display:flex;
+}
+.author-date{
+    justify-content:center;
+    display:flex;
+    margin:0px;
+}
+.the-article{
+    max-height:100vh;
+    overflow:auto;
+}
+{% endblock style %}
+{% block body %}
+ <div class="read-article-body">
+    <div class="read-article">
+        <div class="title"><h2 style="margin:3px 0;">{{blog.title}}</h2></div>
+        <div class="author-date"><p style="margin:2px 0;"> by {{blog.user.username}}, {{blog.pub_date}}</p></div>
+        <div class="the-article">
+            {{blog.content|safe}}
+        </div>
+    </div>
+ </div>
+{% endblock body %}
+

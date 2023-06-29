@@ -12,7 +12,8 @@ from .forms import *
 def index(request):
     if request.user.is_authenticated:
         context = {
-        'blogs' : BlogModel.objects.all()
+        'blogs' : BlogModel.objects.all(),
+        'categories_list' : BlogModel.objects.values_list('category', flat=True).distinct()
         }
         return render(request, 'index.html', context)
     else:
@@ -58,13 +59,18 @@ def add_blog(request):
         if form.is_valid():
             content = form.cleaned_data['content']
             blog = BlogModel(
-                user = User,
+                user = User.objects.get(pk=request.user.id),
                 title=title,
                 content=content,
                 category=category,
                 pub_date=datetime.today()
             )
             blog.save()
+            context = {
+                'form': BlogForm(),
+                'error': "Articled added successfully!"
+            }
+            return render(request, 'add_blog.html', context)
         else:
             context = {
                 'form': form,
@@ -76,4 +82,51 @@ def add_blog(request):
         context = {'form': form}
         return render(request, 'add_blog.html', context)
 def my_account(request):
-    return render(request, 'myaccount.html')
+    context = {
+    'blogs' : BlogModel.objects.filter(user = request.user)
+    }
+    return render(request, 'myaccount.html', context)
+def read(request, slug):
+    blog = BlogModel.objects.filter(slug = slug).first()
+    context = {
+        'blog' : blog
+    }
+    return render(request, 'read.html', context)
+def delete(request, slug):
+    blog_obj = BlogModel.objects.get(slug = slug)
+    blog_obj.delete()
+    
+    context = {
+    'blogs' : BlogModel.objects.filter(user = request.user )
+    }
+    return render(request, 'myaccount.html', context)
+def update(request, slug):
+    if request.method == "POST":
+        form = BlogForm(request.POST)
+        title = request.POST.get('title')
+        category = request.POST.get('category')
+        if form.is_valid():
+            content = form.cleaned_data['content']
+            blog = BlogModel(
+                user = User.objects.get(pk=request.user.id),
+                title=title,
+                content=content,
+                category=category,
+                pub_date=datetime.today()
+            )
+            blog.save()
+            context = {
+                'blogs' : BlogModel.objects.filter(user = request.user)
+            }
+            return render(request, 'myaccount.html', context)
+    blog_obj = BlogModel.objects.get(slug = slug)
+    initial_dict = {
+        'content' : blog_obj.content,
+        'title' : blog_obj.title,
+        'category' : blog_obj.category
+    }
+    form = BlogForm(initial = initial_dict)
+    context = {
+        'form' : form,
+    }
+    return(request, 'update_blog.html', context)
