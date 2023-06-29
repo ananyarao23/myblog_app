@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Quicksand&display=swap" rel="stylesheet">
+    <title>Document</title>
+</head>
+<style>
+    body{
+        margin: 0;
+        padding: 0;
+    }
+    .container{
+        margin-left: 0;
+        margin-right: 0;
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .topnav{
+        display: flex;
+        position: absolute;
+        width: 100vw;
+        height: 10vh;
+        opacity: 1;
+        background-color: white;
+        font-weight: bold;
+        position: sticky;
+    }
+    .nav{
+        overflow: hidden;
+        width: 80%; 
+    }
+    .nav a{
+        margin-top: 2vh;
+        float:left;
+        text-decoration: none;
+        color: black;
+        margin-left: 1vw;
+        padding: 0.5vh 1vw 0.5vh 1vw;
+        font-family: 'Quicksand', sans-serif;
+        font-size: 1.5vw;
+    }
+    @media screen and (min-width: 1000px) {
+        .nav a{
+            font-size: 16px;
+        }
+      }
+    
+    .nav a:hover{
+        text-decoration: underline;
+    }
+    .nav a:active{
+        text-decoration: underline;
+    }
+    .heading{
+       font-family: 'Cinzel', serif;
+       margin-right: 5vw;
+       font-size: 1.7vw;
+       float: right;
+    }
+    .head{
+        width: 20%;
+    }
+</style>
+<body>
+   <div class="container">
+    <div class="topnav">
+        <div class="nav">
+            <a href="/">Home</a>
+            <a href="#content">Explore</a>
+            <a href="/add_blog">Contribute</a>
+            <a href="/contact">Contact</a>
+            <a href="xyz">Help</a>
+            <a href="/my_account">My Account</a>
+        </div> 
+        <div class="head">
+            <h3 class="heading">App's name</h3>
+        </div>
+    </div>
+    {% block body %}
+    {% endblock body %}
+   </div>
+</body>

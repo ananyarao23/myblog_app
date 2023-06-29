@@ -1,0 +1,43 @@
+
+{% extends 'base.html' %}
+{% block body %}
+<style>
+ input{
+    border-radius:5px;
+ }
+ .add-blog{
+    margin:20px;
+
+ }
+ .submit-blog{
+    background-color:black;
+    color:white;
+    padding: 5px 15px 5px 15px;
+    font-size:18px;
+    border: 3px solid black;
+    border-radius:4px;
+ }
+</style>
+<div class="container">
+    <div class="add-blog">
+        <form action="/" method="post">
+            {% csrf_token %}
+            <h1>Add an Article</h1>
+            <label for="title">Title:</label> <br>
+            <input type="text" name="title" id="title" >
+            <div>
+                {{ form.media }}
+                {{ form.as_p }}
+            </div>
+            
+            <div>
+                <label for="category">Category:</label> <br>
+                <input type="text" name="category" id="category"> <br> <br>
+            </div>
+            <button type="submit" class="submit-blog">Add your Article</button> 
+            {{ error }}
+        </form>
+    </div>
+</div>
+
+{% endblock body %}
